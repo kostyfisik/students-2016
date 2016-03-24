@@ -51,32 +51,11 @@ def get_cell(array, row, column):
             temp[count]=array[i,j]
             count+=1
     return temp
-           
-                   
-def simple_solution(array):
-    changes = True
-    while changes:
-        changes=False
-        for i in range(9):
-            for j in range(9):
-                if not array[i,j]==0:
-                    continue
-                counts = 0
-                new_value = 0
-                for value in range(1,9):
-                    if not is_value_used(array, value, i, j):
-                        counts += 1
-                        new_value = value
-                    if counts > 1:
-                        break
-                if counts == 1:
-                    field[i,j]=new_value
-                    changes = True
-    return(array)
-
+         
+                
 def get_options(array, row, column):
     temp=[]
-    for value in range(1,9):
+    for value in range(1,10):
         if (not is_in_array(get_row(array, row), value) 
             and not is_in_array(get_column(array, column), value) 
             and not is_in_array(get_cell(array, row, column), value)):
@@ -91,18 +70,21 @@ def simple_solution(array):
         list_of_options=[]
         for i in range(9):
             for j in range(9):
-                if not array[i,j]==0:
-                    continue
-                list_of_options.append(get_options(array, i, j))
+                list_of_options.append(get_options(array, i+1, j+1))
         count=0
         for i in range(9):
-            for j in range(9):
-                if len(list_of_options[count])==1:
-                    array[i,j] = int(list_of_options[count])
-                    #print('row = ', i, ', column = ', j, ', value = ', array[i,j])
-                    changed=True
-                    break
-                count+=1
+            if changed:
+                break            
+            else:
+                for j in range(9):
+                    if changed:
+                        break
+                    else:
+                        if len(list_of_options[count])==1 and array[i,j]==0:
+                            array[i,j] = int(list_of_options[count])
+                            print('row = ', i+1, ', column = ', j+1, ', value = ', array[i,j])
+                            changed = True                        
+                        count+=1                        
     return array
 
 def is_solved(array):
@@ -121,10 +103,21 @@ def is_solved(array):
 #print(get_options(sudoku, 3, 5))
 #print(simple_solution(sudoku))
 #print(6//3+1)
-#simple_solution(sudoku)
-#if is_solved(sudoku):
-#    print('Sudoku is solved. Ansewer: ')
-#    print(sudoku)
-#else:
-#    print('Sudoku is not solved. Last statement:')
-#    print(sudoku)
+print(get_options(sudoku, 4, 7))
+simple_solution(sudoku)
+if is_solved(sudoku):
+    print('Sudoku is solved. Ansewer: ')
+    print(sudoku)
+else:
+    print('Sudoku is not solved. Last statement:')
+    print(sudoku)
+#print(get_cell(sudoku, 3, 7))
+#print(get_row(sudoku, 3))
+#print(get_column(sudoku, 7))
+
+#print(len(get_options(sudoku, 3, 7)))
+#for i in range(9):
+#    for j in range(9):
+#        if len(get_options(sudoku, i+1, j+1))==1 and sudoku[i,j]==0:
+#             print('row = ', i+1, ', column = ', j+1, ', value = ', int(get_options(sudoku, i+1, j+1)))
+        
