@@ -1,0 +1,76 @@
+%matplotlib inline 
+
+import numpy as np
+import math as m
+import matplotlib.pyplot as plt
+#from time import sleep
+
+imp=377.0 #impedans
+n=5000 #number of points
+tau=100.0 #width of the puls
+t0=10.0*tau #delay of the source
+tot_time=int(n+t0)
+
+dt=tot_time/n
+
+
+def source(t, t0, tau):
+    return m.exp(-(t-t0)**2/(2.0 * tau**2))
+
+
+ex=np.zeros(n)
+hy=np.zeros(n)
+t=np.arange(0, tot_time, n)
+#e=np.zeros(n)
+z = np.linspace(0, n-1, n)
+source_point=n//2
+
+#t = np.arange(0, 10, 0.1 )
+#print(t)
+#for i in range(1, n):
+#    t[i]=t[i-1]+dt
+#    e[i] = source(i, t0, tau)
+#plt.plot(t, e)
+   
+#q=-0.5
+#hy=np.zeros(n)
+#for q in range(1, tot_time):
+#    for m in range(2*n-2):
+#        hy[m+1]=hy[m+1]+(ex[m+2]-ex[m])/imp
+#        ex[m]=ex[m]+(hy[m+1]-hy[m-1])*imp
+#        ex[source_point] += source(q*1.0, t0, tau)
+#        hy[0] = 0
+#        ex[2*n] = 0
+#        fig, axs = plt.subplots(2,1)
+#        fig.tight_layout()
+#        #plt.title("After t=%i"%time)
+#        axs[0].plot(all_steps, ez, label="Ez")
+#        axs[0].plot(all_steps, hy*imp0,  label="Hy*imp0")
+#        axs[0].legend(loc='upper left')
+#        axs[1].plot(all_steps, ez,  label="Ez")
+#        axs[1].legend(loc='upper left')
+ #       plt.savefig("step0-at-time-%i.png"%time,pad_inches=0.02, bbox_inches='tight')
+#        plt.draw()
+#        plt.clf()
+#        plt.close()
+
+for q in range(tot_time+1):
+    hy[:-1] = hy[:-1] + (ex[1:] - ex[:-1])/imp
+    ex[1:] = ex[1:] + (hy[1:]-hy[:-1])*imp
+    ex[source_point] += source(q, t0, tau)
+    if q % 50 == 0 or time+5 > tot_time:
+        fig=plt.figure()
+        fig, axs = plt.subplots(2,1)
+        #fig.tight_layout()
+        plt.title("bullshit")
+        axs[0].plot(z, ex, label="Ex")
+        axs[0].plot(z, hy*imp,  label="Hy*imp")
+        axs[0].legend(loc='upper left')
+        axs[1].plot(z, ex, label="Ex")
+        axs[1].legend(loc='upper left')
+        plt.savefig("step0-at-time-%i.png"%q,pad_inches=0.02, bbox_inches='tight')
+        plt.draw()
+        plt.plot(z,hy)
+        
+
+        
