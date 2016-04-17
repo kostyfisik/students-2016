@@ -4,9 +4,6 @@ import numpy as np
 import math as math
 import matplotlib.pyplot as plt
 
-#imp=377.0 #impedans
-#eps=8.85*10**(-12)
-#mu=1.26*10**(-6)
 n=5000 #number of points
 tau=100.0 #width of the puls
 t0=10.0*tau #delay of the source
@@ -22,14 +19,15 @@ def drawplot(z, ex, hy, q):
     plt.grid(True)
     plt.xlabel(u'Coordinate z')
     plt.ylabel(u'Function')
-    ax = fig.add_subplot(111)
+    ax = fig.add_subplot(211)
     ax.plot(z, ex, '-', color='blue', linewidth=2, label=u'Ex')
     ax.plot(z, hy, '--', color='red', linewidth=2, label=u'Hy')
+    bx = fig.add_subplot(212)
+    bx.plot(z, ex, '-', color='blue', linewidth=2, label=u'Ex')
     plt.savefig("step0-at-time-%i.png"%q, fmt='png')
     plt.draw()
 
 ex=np.zeros(n)
-print(ex)
 hy=np.zeros(n)
 z=np.linspace(0,n-1,n)
 
