@@ -32,8 +32,10 @@ hy=np.zeros(n)
 z=np.linspace(0,n-1,n)
 
 for q in range(tot_time):
+    hy[n]=hy[n-1]
     for m in range(n-1):
         hy[m]+=(ex[m+1]-ex[m])
+    ex[0]=ex[1]
     for m in range(n-1):
         ex[m+1]+=(hy[m+1]-hy[m])
         if m==source_point:
