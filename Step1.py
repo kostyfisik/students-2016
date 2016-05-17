@@ -1,5 +1,7 @@
 %matplotlib inline 
 
+#using SGS system we consider eps = mu = 1
+
 import numpy as np
 import math as math
 import matplotlib.pyplot as plt
@@ -9,10 +11,14 @@ tau=100.0 #puls width
 t0=10.0*tau #delay of the source
 tot_time=int(n+t0)
 source_point=n//2
-pml_width=5 #PML width
-sigma_eps = 10**3 
-sigma_mu = 10**3 
-eps = 5
+pml_width=20 #PML width
+sigma_eps = 20000
+sigma_mu = 20000
+
+# меньше 15 000!!!
+
+
+eps = 1
 mu = 1
 delta = 1/n #step width
 eta1_eps = (2*eps-sigma_eps*delta)/(2*eps+sigma_eps*delta)
