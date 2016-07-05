@@ -4,7 +4,7 @@ from math import exp
 N=150 # walls position -N и N
 eps=1 #epsilon
 mu=1 #mue
-Time=200 #moment of time
+Time=190 #moment of time
 trange=500 #time range
 t=0 #time moment for Gaussian
 tdelay=50 #time delay for Gaussian
@@ -17,7 +17,7 @@ H[0]=0 # Magnetic wall PMC
 for i in range (0,2*N+1):
     z[i]=i #position
 ######MAIN PART####
-for t in range (0, trange):
+for t in range (0, Time+1):
     for k in range (1, 2*N+1):
         H[k]=H[k]+1/mu*(E[k]-E[k-1])  
     E[N]=E[N]+exp(-(t-tdelay)*(t-tdelay)/(sigma*sigma)) #Source in the center
@@ -27,7 +27,20 @@ for t in range (0, trange):
     if t==Time:
         print(E)
         print(H)
-        plt.plot(z,E)
-        plt.plot(z,H)
+        plt.figure(1)
+        plt.subplot(211)
+        plt.plot(z, E, 'k--')
+        plt.xlabel('coordinate')
+        plt.ylabel('E-field')
+        #plt.axis([0, 2*N+1, -1, 1])
+
+        plt.subplot(212)
+        plt.plot(z, H, 'r--')
+        plt.xlabel('coordinate')
+        plt.ylabel('H-field')
+        #plt.axis([0, 2*N+1, -1, 1])
+        plt.show()
+        #plt.plot(z,E)
+        #plt.plot(z,H)
         plt.show()
 
